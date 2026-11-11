@@ -33,7 +33,7 @@ public class SenderAuthorizationMiddleware
         if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             token = token["Bearer ".Length..].Trim();
 
-        var email = token.Length > 0 ? senderService.GetEmailForToken(token) : null;
+        var email = token.Length > 0 ? await senderService.GetEmailForTokenAsync(token) : null;
         if (email == null)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;

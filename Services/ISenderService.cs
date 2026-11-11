@@ -6,5 +6,5 @@ public interface ISenderService
 {
     Task<Sender?> RegisterAsync(Sender sender, string password);
     Task<Sender?> AuthenticateAsync(string email, string password);
-    string? GetEmailForToken(string token);
+    Task<string?> GetEmailForTokenAsync(string token);
 }

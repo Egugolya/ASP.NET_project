@@ -13,7 +13,6 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseSqlite(connectionString));
 
 builder.Services.AddScoped<IRepository<Sender>, UserRepository>();
-builder.Services.AddSingleton<SenderTokenStore>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

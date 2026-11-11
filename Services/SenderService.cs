@@ -1,5 +1,7 @@
 using System.Security.Cryptography;
+using System.Text;
 using Lesson2.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lesson2.Services;
 
@@ -10,12 +12,12 @@ public class SenderService : ISenderService
     private const int Iterations = 210_000;
 
     private readonly IRepository<Sender> _senderRepository;
-    private readonly SenderTokenStore _tokenStore;
+    private readonly ApiDbContext _dbContext;
 
-    public SenderService(IRepository<Sender> senderRepository, SenderTokenStore tokenStore)
+    public SenderService(IRepository<Sender> senderRepository, ApiDbContext dbContext)
     {
         _senderRepository = senderRepository;
-        _tokenStore = tokenStore;
+        _dbContext = dbContext;
     }
 
     public async Task<Sender?> RegisterAsync(Sender sender, string password)
@@ -33,7 +35,7 @@ public class SenderService : ISenderService
         _senderRepository.Add(sender);
         await _senderRepository.SaveChangesAsync();
 
-        sender.Token = _tokenStore.CreateToken(normalizedEmail);
+        sender.Token = await CreateTokenAsync(normalizedEmail);
         return sender;
     }
 
@@ -50,12 +52,39 @@ public class SenderService : ISenderService
         if (!CryptographicOperations.FixedTimeEquals(actualHash, expectedHash))
             return null;
 
-        sender.Token = _tokenStore.CreateToken(normalizedEmail);
+        sender.Token = await CreateTokenAsync(normalizedEmail);
         return sender;
     }
 
-    public string? GetEmailForToken(string token)
+    public async Task<string?> GetEmailForTokenAsync(string token)
     {
-        return _tokenStore.GetEmailForToken(token);
+        var tokenHash = HashToken(token);
+        var storedToken = await _dbContext.SenderTokens
+            .AsNoTracking()
+            .SingleOrDefaultAsync(storedToken => storedToken.TokenHash == tokenHash);
+
+        return storedToken?.SenderEmail;
+    }
+
+    private async Task<string> CreateTokenAsync(string email)
+    {
+        var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32))
+            .TrimEnd('=')
+            .Replace('+', '-')
+            .Replace('/', '_');
+
+        _dbContext.SenderTokens.Add(new SenderToken
+        {
+            TokenHash = HashToken(token),
+            SenderEmail = email
+        });
+        await _dbContext.SaveChangesAsync();
+
+        return token;
+    }
+
+    private static string HashToken(string token)
+    {
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
     }
 }

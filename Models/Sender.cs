@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Lesson2.Models;
@@ -10,5 +11,6 @@ public class Sender
     public string PasswordSalt { get; set; } = string.Empty;
 
     [JsonIgnore]
+    [NotMapped]
     public string? Token { get; set; }
 }

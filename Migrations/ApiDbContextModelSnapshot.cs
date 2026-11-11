@@ -90,12 +90,36 @@ namespace Lesson2.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Token")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Email");
 
                     b.ToTable("Senders");
+                });
+
+            modelBuilder.Entity("Lesson2.Models.SenderToken", b =>
+                {
+                    b.Property<string>("TokenHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SenderEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TokenHash");
+
+                    b.HasIndex("SenderEmail");
+
+                    b.ToTable("SenderTokens");
+                });
+
+            modelBuilder.Entity("Lesson2.Models.SenderToken", b =>
+                {
+                    b.HasOne("Lesson2.Models.Sender", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
                 });
 #pragma warning restore 612, 618
         }
