@@ -1,0 +1,123 @@
+@baseUrl = http://localhost:5141
+@token = Ja7Hrpg3f6CjOavGQPcLyLjqY-0Yxdip-UCDKNAAoCY
+
+### Успішна реєстрація
+POST {{baseUrl}}/api/sender/register
+Content-Type: application/json
+
+{
+  "name": "Test recepient",
+  "email": "recipient@example.com",
+  "password": "test-password"
+}
+
+### повторна реєстрація тієї самої пошти
+POST {{baseUrl}}/api/sender/register
+Content-Type: application/json
+
+{
+  "name": "Test Sender",
+  "email": "sender@example.com",
+  "password": "test-password"
+}
+
+### некоректний формат пошти при реєстрації
+POST {{baseUrl}}/api/sender/register
+Content-Type: application/json
+
+{
+  "name": "Test Sender",
+  "email": "senderxample.com",
+  "password": "test-password"
+}
+
+### Успішний вхід
+POST {{baseUrl}}/api/sender/login
+Content-Type: application/json
+
+{
+  "email": "sender@example.com",
+  "password": "test-password"
+}
+
+
+
+
+### Помилка: неправильний пароль
+POST {{baseUrl}}/api/sender/login
+Content-Type: application/json
+
+{
+  "email": "sender@example.com",
+  "password": "qwerty"
+}
+
+### Помилка: невідома пошта
+POST {{baseUrl}}/api/sender/login
+Content-Type: application/json
+
+{
+  "email": "sender1234@example.com",
+  "password": "test-password"
+}
+
+### Успішне додавання повідомлення
+POST {{baseUrl}}/messages
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "recipient@example.com",
+  "content": "hi"
+}
+
+### токен не відповідає пошті відправника
+POST {{baseUrl}}/messages
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "from": "other@example.com",
+  "to": "recipient@example.com",
+  "content": "This should be rejected"
+}
+
+### відсутній токен
+POST {{baseUrl}}/messages
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "recipient@example.com",
+  "content": "This should be rejected"
+}
+
+### недійсний токен
+POST {{baseUrl}}/messages
+X-My-authorization: invalid-token
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "recipient@example.com",
+  "content": "This should be rejected"
+}
+
+### некоректний JSON
+POST {{baseUrl}}/messages
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "recipient@example.com",
+  "content":
+}
+
+### повідомлення не знайдено
+GET {{baseUrl}}/messages/2147483647
+Accept: application/json
+
+### повідомлення для видалення не знайдено
+DELETE {{baseUrl}}/messages/2147483647

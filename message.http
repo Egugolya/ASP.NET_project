@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:5141
+@token = 1TZtHIeDaszwpuDMie9VTxFI3xPkST3CXHCi_BtkU4c
+# ### 1
+# GET {{baseUrl}}/messages
+# Accept: application/json
+
+# ### 2
+# GET {{baseUrl}}/messages/1
+# Accept: application/json
+
+# ### 3
+# GET {{baseUrl}}/messages/sender?email=sender@example.com
+# Accept: application/json
+
+
+
+POST {{baseUrl}}/messages
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "sender2@example.com",
+  "content": "Hello world!"
+}
+
+### ----------------
+
+POST {{baseUrl}}/messages
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "from": "error@example.com",
+  "to": "sender2@example.com",
+  "content": "Hello world!"
+}
+
+### DELETE {{baseUrl}}/messages/

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Вхід користувача</title>
+    <script src="/script.js?v=orders-refresh-2" defer></script>
+</head>
+<body>
+    <h1>Вхід користувача</h1>
+    <form id="login-form">
+        <p>
+            <label for="email">Email (логін)</label><br>
+            <input id="email" name="email" type="email" autocomplete="username" required>
+        </p>
+        <p>
+            <label for="password">Пароль</label><br>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </p>
+        <button type="submit">Увійти</button>
+    </form>
+    <pre id="result" aria-live="polite"></pre>
+    <form action="/swagger" method="get">
+        <button type="submit">Відкрити Swagger UI</button>
+    </form>
+    <button id="load-messages" type="button">Показати всі повідомлення</button>
+    <ul id="messages"></ul>
+
+    <hr>
+    <h2>Замовлення</h2>
+    <form id="order-form">
+        <p>
+            <label for="order-date">Дата замовлення</label><br>
+            <input id="order-date" name="orderDate" type="date" required>
+        </p>
+        <p>
+            <label for="products-quantity">Кількість товарів</label><br>
+            <input id="products-quantity" name="productsQuantity" type="number" min="1" step="1" required>
+        </p>
+        <p>
+            <label for="products-cost">Вартість товарів</label><br>
+            <input id="products-cost" name="productsCost" type="number" min="0.01" step="0.01" required>
+        </p>
+        <p>
+            <label for="order-comment">Коментар</label><br>
+            <textarea id="order-comment" name="comment" maxlength="200"></textarea>
+        </p>
+        <button type="submit">Створити замовлення</button>
+    </form>
+    <p id="orders-result" aria-live="polite"></p>
+    <button id="load-orders" type="button">Оновити список замовлень</button>
+    <div id="orders"></div>
+</body>
+</html>

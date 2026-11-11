@@ -1,0 +1,72 @@
+[
+  {
+    "Id": 5,
+    "From": null,
+    "To": null,
+    "Content": "Authorized test message",
+    "DateTime": null
+  },
+  {
+    "Id": 6,
+    "From": null,
+    "To": null,
+    "Content": "test message",
+    "DateTime": null
+  },
+  {
+    "Id": 7,
+    "From": "sender@example.com",
+    "To": "sender2@example.com",
+    "Content": "Hello world!",
+    "DateTime": null
+  },
+  {
+    "Id": 8,
+    "From": "sender@example.com",
+    "To": "sender2@example.com",
+    "Content": "Hello world!",
+    "DateTime": null
+  },
+  {
+    "Id": 9,
+    "From": "sender@example.com",
+    "To": "sender2@example.com",
+    "Content": "Hello world!",
+    "DateTime": "2026-11-03T20:51:01.203971+02:00"
+  },
+  {
+    "Id": 10,
+    "From": "sender@example.com",
+    "To": "sender2@example.com",
+    "Content": "Hello world!",
+    "DateTime": "2026-11-03T21:00:53.1840073+02:00"
+  },
+  {
+    "Id": 11,
+    "From": "sender@example.com",
+    "To": "sender2@example.com",
+    "Content": "Hello world!",
+    "DateTime": "2026-11-03T21:05:22.8826365+02:00"
+  },
+  {
+    "Id": 12,
+    "From": "sender@example.com",
+    "To": "sender2@example.com",
+    "Content": "Hello world!",
+    "DateTime": "2026-11-03T21:18:41.5119008+02:00"
+  },
+  {
+    "Id": 13,
+    "From": "sender@example.com",
+    "To": "recipient@example.com",
+    "Content": "test message",
+    "DateTime": "2026-11-11T22:43:34.2562042+02:00"
+  },
+  {
+    "Id": 14,
+    "From": "sender@example.com",
+    "To": "recipient@example.com",
+    "Content": "hi",
+    "DateTime": "2026-11-11T22:43:51.9357371+02:00"
+  }
+]
