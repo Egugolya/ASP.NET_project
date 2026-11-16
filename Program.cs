@@ -13,6 +13,8 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseSqlite(connectionString));
 
 builder.Services.AddScoped<IRepository<Sender>, UserRepository>();
+builder.Services.AddScoped<global::Lesson2.Repositories.ICategoryRepository, global::Lesson2.Repositories.CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

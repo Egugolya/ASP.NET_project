@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using Lesson2.Models;
+using Lesson2.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lesson2.Services;
@@ -37,6 +38,32 @@ public class SenderService : ISenderService
 
         sender.Token = await CreateTokenAsync(normalizedEmail);
         return sender;
+    }
+
+    public Task<ICollection<Sender>> GetAllAsync() => _senderRepository.GetAllAsync();
+
+    public Task<PaginatedResult<Sender>> GetPaginatedAsync(int page, int pageSize)
+    {
+        return _senderRepository.GetPaginatedAsync(
+            page,
+            pageSize,
+            query => query.OrderBy(sender => sender.Email));
+    }
+
+    public Task<Sender?> GetByEmailAsync(string email)
+    {
+        return _senderRepository.GetByIdAsync(email.Trim().ToLowerInvariant());
+    }
+
+    public async Task<bool> DeleteAsync(string email)
+    {
+        var sender = await GetByEmailAsync(email);
+        if (sender is null)
+            return false;
+
+        _senderRepository.Remove(sender);
+        await _senderRepository.SaveChangesAsync();
+        return true;
     }
 
     public async Task<Sender?> AuthenticateAsync(string email, string password)

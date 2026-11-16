@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Categories</title>
+    <link rel="stylesheet" href="/categories.css?v=categories-ui-3" />
+    <script src="/categories.js?v=categories-ui-3" defer></script>
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <h1>Categories</h1>
+            <a href="/swagger">Swagger docs</a>
+        </header>
+
+        <section class="card" aria-labelledby="form-title">
+            <h2 id="form-title">Add a category</h2>
+            <form id="category-form">
+                <label for="category-name">Title</label>
+                <div class="form-row">
+                    <input id="category-name" name="name" type="text" maxlength="100" placeholder="For example, Electronics" required />
+                    <button id="submit-category" type="submit">Add category</button>
+                    <button id="cancel-edit" class="secondary-button" type="button" hidden>Cancel</button>
+                </div>
+            </form>
+            <p id="category-status" class="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="categories-title">
+            <div class="list-header">
+                <h2 id="categories-title">All categories <span id="category-count" class="count">(0)</span></h2>
+                <div class="filter-controls">
+                    <label class="filter-label">
+                        <span class="visually-hidden">Filter by title</span>
+                        <input id="category-filter" type="search" placeholder="Filter by title" />
+                    </label>
+                    <button id="category-search" type="button">Search</button>
+                </div>
+                <label class="sort-label">
+                    <span class="visually-hidden">Sort categories</span>
+                    <select id="category-sort">
+                        <option value="id_asc">ID (low to high)</option>
+                        <option value="name_asc">Title A–Z</option>
+                        <option value="name_desc">Title Z–A</option>
+                    </select>
+                </label>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Updated</th>
+                            <th scope="col"><span class="visually-hidden">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="categories-list"></tbody>
+                </table>
+                <p id="empty-state" class="empty-state">Loading categories...</p>
+            </div>
+            <nav class="pagination" aria-label="Category pages">
+                <button id="previous-page" type="button">Previous</button>
+                <span id="page-info" aria-live="polite">Page 1 of 1</span>
+                <button id="next-page" type="button">Next</button>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

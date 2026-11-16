@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Lesson2.Models.Domain;
 
 namespace Lesson2.Models
 {
@@ -10,6 +11,7 @@ namespace Lesson2.Models
 
         public virtual DbSet<Sender> Senders { get; set; }
         public virtual DbSet<SenderToken> SenderTokens { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
 

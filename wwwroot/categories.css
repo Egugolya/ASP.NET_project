@@ -1,0 +1,271 @@
+* {
+    box-sizing: border-box;
+}
+
+select {
+    padding: 10px 11px;
+    border: 1px solid #343847;
+    border-radius: 6px;
+    background: #191c25;
+    color: #f4f4f7;
+    font: inherit;
+    font-size: 12px;
+}
+
+:root {
+    color-scheme: dark;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background: #101117;
+    color: #f4f4f7;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    background: #101117;
+}
+
+.page {
+    width: min(1120px, calc(100% - 48px));
+    margin: 16px auto 48px;
+}
+
+.page-header,
+.list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.page-header {
+    margin-bottom: 12px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+h2 {
+    margin: 0 0 14px;
+    font-size: 14px;
+}
+
+.page-header a {
+    color: #94a8ff;
+    font-size: 12px;
+}
+
+.card {
+    margin-bottom: 14px;
+    padding: 16px;
+    border: 1px solid #303340;
+    border-radius: 9px;
+    background: #1b1e28;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+
+#category-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+input {
+    min-width: 0;
+    padding: 10px 11px;
+    border: 1px solid #343847;
+    border-radius: 6px;
+    outline: none;
+    background: #191c25;
+    color: #f4f4f7;
+    font: inherit;
+    font-size: 12px;
+}
+
+input:focus {
+    border-color: #8392ff;
+    box-shadow: 0 0 0 2px rgb(131 146 255 / 18%);
+}
+
+.form-row input {
+    flex: 1;
+}
+
+button {
+    padding: 9px 13px;
+    border: 1px solid #42465a;
+    border-radius: 6px;
+    background: #232633;
+    color: #f4f4f7;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+}
+
+button:hover {
+    border-color: #838cff;
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
+#submit-category {
+    min-height: 38px;
+    border-color: #8290ff;
+    background: #8290ff;
+    color: #11131c;
+    font-weight: 600;
+}
+
+.secondary-button {
+    color: #c8c9d1;
+}
+
+.status {
+    margin: 10px 0 0;
+    color: #aeb8d6;
+    font-size: 12px;
+    white-space: pre-line;
+}
+
+.list-header {
+    margin-bottom: 14px;
+}
+
+.list-header h2 {
+    margin: 0;
+}
+
+.count {
+    color: #aeb2c2;
+    font-weight: 400;
+}
+
+.filter-label input {
+    width: 220px;
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-label select {
+    min-width: 120px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+    color: #b6bbcb;
+    font-size: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 12px;
+}
+
+th {
+    padding: 10px 8px;
+    border-bottom: 1px solid #343744;
+    color: #b6bbcb;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+td {
+    padding: 9px 8px;
+    border-bottom: 1px solid #2a2d37;
+}
+
+td:first-child,
+td:nth-child(3),
+td:nth-child(4) {
+    color: #b8bfd3;
+    white-space: nowrap;
+}
+
+td:nth-child(2) {
+    font-weight: 600;
+}
+
+.actions {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.actions button {
+    margin-left: 5px;
+    padding: 4px 8px;
+}
+
+.delete-button {
+    color: #ff777e;
+}
+
+.empty-state {
+    margin: 18px 0 4px;
+    color: #aeb2c2;
+    font-size: 12px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 640px) {
+    .page {
+        width: calc(100% - 24px);
+    }
+
+    .list-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .filter-label,
+    .filter-label input,
+    .filter-controls,
+    .sort-label,
+    .sort-label select {
+        width: 100%;
+    }
+
+    .form-row {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+    .form-row input {
+        flex-basis: 100%;
+    }
+}

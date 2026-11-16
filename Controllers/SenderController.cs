@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Lesson2.Models;
 using Lesson2.Models.DTO;
@@ -12,7 +13,8 @@ namespace Lesson2.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/sender")]
-[Tags("Sender Authentication")]
+[Route("api/user")]
+[Tags("Users")]
 public class SenderController : ControllerBase
 {
     private readonly ISenderService _senderService;
@@ -64,5 +66,65 @@ public class SenderController : ControllerBase
             return Unauthorized();
 
         return Ok(_mapper.Map<SenderTokenDto>(authenticatedSender));
+    }
+
+    /// <summary>Gets all public user details.</summary>
+    [HttpGet("all")]
+    [ProducesResponseType(typeof(List<SenderViewDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<SenderViewDto>>> GetAllUsers()
+    {
+        var users = await _senderService.GetAllAsync();
+        return Ok(_mapper.Map<List<SenderViewDto>>(users));
+    }
+
+    /// <summary>Gets a user by email address.</summary>
+    /// <param name="id">The user's email address.</param>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(SenderViewDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<SenderViewDto>> GetUser(string id)
+    {
+        var user = await _senderService.GetByEmailAsync(id);
+        return user is null ? NotFound() : Ok(_mapper.Map<SenderViewDto>(user));
+    }
+
+    /// <summary>Gets one page of public user details.</summary>
+    [HttpGet("paged")]
+    [ProducesResponseType(typeof(PaginatedResult<SenderViewDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<PaginatedResult<SenderViewDto>>> GetPagedUsers(
+        [FromQuery, Range(1, int.MaxValue)] int page = 1,
+        [FromQuery, Range(1, 100)] int pageSize = 10)
+    {
+        var result = await _senderService.GetPaginatedAsync(page, pageSize);
+        return Ok(new PaginatedResult<SenderViewDto>
+        {
+            Models = _mapper.Map<List<SenderViewDto>>(result.Models),
+            Page = result.Page,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount
+        });
+    }
+
+    /// <summary>Deletes the user associated with the supplied authorization token.</summary>
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> DeleteUser([FromHeader(Name = "X-My-authorization")] string? token)
+    {
+        if (string.IsNullOrWhiteSpace(token))
+            return Unauthorized();
+
+        token = token.Trim();
+        const string bearerPrefix = "Bearer ";
+        if (token.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
+            token = token[bearerPrefix.Length..].Trim();
+
+        var email = await _senderService.GetEmailForTokenAsync(token);
+        if (email is null)
+            return Unauthorized();
+
+        var deleted = await _senderService.DeleteAsync(email);
+        return deleted ? NoContent() : Unauthorized();
     }
 }

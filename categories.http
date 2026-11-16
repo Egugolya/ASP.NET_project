@@ -1,0 +1,40 @@
+@baseUrl = http://localhost:5141
+@token = replace-with-a-valid-token
+@categoryId = 1
+
+### Get a filtered page of categories in ascending title order
+GET {{baseUrl}}/api/categories?page=1&pageSize=5&orderBy=name_asc&filter.name=Electronics
+X-My-authorization: {{token}}
+Accept: application/json
+
+### Get a page of categories in descending title order
+GET {{baseUrl}}/api/categories?page=1&pageSize=5&orderBy=name_desc
+X-My-authorization: {{token}}
+Accept: application/json
+
+### Get a category by ID
+GET {{baseUrl}}/api/categories/{{categoryId}}
+X-My-authorization: {{token}}
+Accept: application/json
+
+### Create a category
+POST {{baseUrl}}/api/categories
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Electronics"
+}
+
+### Update a category
+PUT {{baseUrl}}/api/categories/{{categoryId}}
+X-My-authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Home Electronics"
+}
+
+### Delete a category
+DELETE {{baseUrl}}/api/categories/{{categoryId}}
+X-My-authorization: {{token}}
